@@ -6,18 +6,24 @@ import { geolocated } from "react-geolocated";
 class MapContainer extends React.Component {
   render() {
 
+    //Google Map API call styles
+    const styles = require('./googleMapStyles.json')
+
     //Style 
     const style = {
       width: '90vw',
       height: '80vh',
+      borderRadius: '10px',
       'marginLeft': 'auto',
-      'marginRight': 'auto'
+      'marginRight': 'auto',
+
     }
 
     console.log(`Available: ${this.props.isGeolocationAvailable}`)
     console.log(`Enabled: ${this.props.isGeolocationEnabled}`)
 
     return (
+
 
       <Map
       style = { style }
@@ -27,6 +33,8 @@ class MapContainer extends React.Component {
             lat: 43.0096,
             lng: -81.2737
       }}
+
+     
       >
 
         <Marker onClick={this.onMarkerClick}

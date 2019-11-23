@@ -11,8 +11,8 @@ class Heading extends React.Component {
                 style={{
                     color: "orange",
                     display: "flex",
-                    justifyContent: "left",
-                    alignItems: "left",
+                    justifyContent: "center",
+                    alignItems: "center",
                     fontSize: "150%"
                 }}
             >

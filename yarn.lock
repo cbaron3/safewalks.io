@@ -904,6 +904,18 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-9.0.1.tgz#c27b391d8457d1e893f1eddeaf5e5412d12ffbb5"
   integrity sha512-6It2EVfGskxZCQhuykrfnALg7oVeiI6KclWSmGDqB0AiInVrTGB9Jp9i4/Ad21u9Jde/voVQz6eFX/eSg/UsPA==
 
+"@fdmg/ts-react-image-button@^1.0.26":
+  version "1.0.26"
+  resolved "https://registry.yarnpkg.com/@fdmg/ts-react-image-button/-/ts-react-image-button-1.0.26.tgz#4cc4d99f54f7047abf8269b96c7b8511a7232a67"
+  integrity sha512-S5Ua/wLgbcvuqCp8nZNQxN0HL0PYjdyW59z4hPD8whNYEQ/55dCtwGHIi8L+9U9PHtrxMbog90cyLFs0+OFt7Q==
+  dependencies:
+    "@fdmg/ts-react-image" "^1.0.6"
+
+"@fdmg/ts-react-image@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@fdmg/ts-react-image/-/ts-react-image-1.0.6.tgz#c4bfd5505ae04b5dcf0b06fcfcd091d9588dbd94"
+  integrity sha512-Xy30Y7cMPiBbQ0d/0hiKoc00EnEPANyvBoDgbYm++h7oQIOPAApJUDyWLAzcRJVW9OS2bE77z+YD68C/pNyf5Q==
+
 "@hapi/address@2.x.x":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.2.tgz#1c794cd6dbf2354d1eb1ef10e0303f573e1c7222"
