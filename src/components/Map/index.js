@@ -5,15 +5,27 @@ import { geolocated } from "react-geolocated";
 
 class MapContainer extends React.Component {
   render() {
+
+    //Style 
+    const style = {
+      width: '90vw',
+      height: '80vh',
+      'marginLeft': 'auto',
+      'marginRight': 'auto'
+    }
+
     console.log(`Available: ${this.props.isGeolocationAvailable}`)
     console.log(`Enabled: ${this.props.isGeolocationEnabled}`)
+
     return (
+
       <Map
+      style = { style }
       google={this.props.google}
       zoom={14}
       initialCenter={{
-            lat: 40.854885,
-            lng: -88.081807
+            lat: 43.0096,
+            lng: -81.2737
       }}
       >
 

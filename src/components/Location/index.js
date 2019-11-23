@@ -40,7 +40,7 @@ class Demo extends React.Component {
 
 export default geolocated({
     positionOptions: {
-        enableHighAccuracy: false,
+        enableHighAccuracy: true,
     },
     userDecisionTimeout: 5000,
 })(Demo);

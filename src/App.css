@@ -1,0 +1,7 @@
+.App {
+    height: 100vh;
+    background-image: url("twilight.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
