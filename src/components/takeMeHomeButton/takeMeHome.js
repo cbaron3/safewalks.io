@@ -11,9 +11,14 @@ class Home extends Component {
             marginTop: 0,
             paddingTop: 0,
             paddingBottom: 0,
+            
+
+            color: "Orange",
+            fontWeight: "Bold",
+            
 
             backgroundColor: 'rgba(52, 52, 52, 0)',
-            fontSize: '40px',
+            fontSize: '64px',
             borderRadius: 10,
             borderWidth: 0,
             borderColor: '#000'
@@ -23,11 +28,12 @@ class Home extends Component {
             <div
                 style={{
 
+
                     display: "flex",
                     justifyContent: "right",
                     alignItems: "right",
                     position: 'absolute',
-                    top: '4vh',
+                    top: '2.25vh',
                     right: '7vw',
 
                 }}
@@ -36,7 +42,7 @@ class Home extends Component {
 
                     style={buttonStyle}
                     onClick={this.shoot}>
-                    🏠
+                    ⌂
                     </button>
 
             </div>

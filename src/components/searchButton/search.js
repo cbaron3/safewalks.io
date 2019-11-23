@@ -27,7 +27,7 @@ class Search extends Component {
                     alignItems: "right",
                     position: 'absolute',
                     top: '4vh',
-                    right: '18vw',
+                    right: '85vw',
 
                 }}
             >
