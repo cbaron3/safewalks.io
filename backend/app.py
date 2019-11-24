@@ -127,13 +127,23 @@ def safe_path():
     # Return as a response a list of routes with their corresponding tracked lights and their bounding box lights and their safety rating
     safety_result = []
     for i in range(len(routes)):
+        ids = []
+        not_tracked = []
+        for tlight in tracked_lights[i]:
+            ids.append(tlight['id'])
+        for nlight in all_lights[i]:
+            if nlight['attributes']['OBJECTID'] not in ids:
+                not_tracked.append(nlight)
+
+        print(not_tracked)
+
         safety_result.append( {
             'rating': total_lights[i],
             'polyline': routes[i]['overview_polyline']['points'],
-            'area_lights' : all_lights[i],
+            'area_lights' : not_tracked,
             'in_range_lights': tracked_lights[i]
         } )
-
+    
     safety_result = json.dumps(safety_result)
     resp = make_response(safety_result, 200)
     resp.headers['Access-Control-Allow-Origin'] = '*'
