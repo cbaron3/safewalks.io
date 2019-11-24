@@ -18,7 +18,7 @@ class Home extends Component {
             
 
             backgroundColor: 'rgba(52, 52, 52, 0)',
-            fontSize: '64px',
+            fontSize: "9vh",
             borderRadius: 10,
             borderWidth: 0,
             borderColor: '#000'

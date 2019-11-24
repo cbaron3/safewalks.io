@@ -11,9 +11,13 @@ class Heading extends React.Component {
                 style={{
                     color: "orange",
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "left",
                     alignItems: "center",
-                    fontSize: "150%"
+                    top: '2.25vh',
+                    right: '7vw',
+                    paddingLeft: '7vw',
+
+                    fontSize: "3vh"
                 }}
             >
                 <h1>safeWalks</h1>

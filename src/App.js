@@ -12,7 +12,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Home/>
-        <Search/>
         <Heading/>
         <MapContainer/>
       </header>

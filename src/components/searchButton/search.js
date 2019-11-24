@@ -34,7 +34,7 @@ class Search extends Component {
                 <button
 
                     style={buttonStyle}
-                    onClick={this.shoot}>
+                    onClick={this.search}>
                     🔍
                     </button>
 

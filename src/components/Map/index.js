@@ -32,7 +32,9 @@ class MapContainer extends React.Component {
       initialCenter={{
             lat: 43.0096,
             lng: -81.2737
+      
       }}
+      
 
      
       >
