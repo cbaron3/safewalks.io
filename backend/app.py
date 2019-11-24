@@ -62,14 +62,14 @@ def safe_path():
     
     seen_lights = [None] * len(routes)
     tracked_lights = [None] * len(routes)
-
+    all_lights = [None] * len(routes)
     total_lights = [0] * len(routes)
     for index, route in enumerate(routes):
         # For every route, calculate the possible lights
         ne_bound = (route['bounds']['northeast']['lat'], route['bounds']['northeast']['lng']) 
         sw_bound = (route['bounds']['southwest']['lat'], route['bounds']['southwest']['lng']) 
         available_lights = opendata.queryAreaLights(ne_bound, sw_bound, 0.00025)
-
+        all_lights[index] = available_lights
         # Decode polyline for waypoints
         waypoints = polyline.decode(route['overview_polyline']['points'])
         # Add start and stop points to waypoints
@@ -130,7 +130,7 @@ def safe_path():
         safety_result.append( {
             'rating': total_lights[i],
             'polyline': routes[i]['overview_polyline']['points'],
-            'area_lights' : list(seen_lights[i]),
+            'area_lights' : all_lights[i],
             'in_range_lights': tracked_lights[i]
         } )
 
