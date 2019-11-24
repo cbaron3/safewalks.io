@@ -187,16 +187,101 @@ def getRouteAvgTraffic(waypoints, roads, radius):
     return sum/total_distance
 
 
-# val = queryStreetTraffic((42.99568, -81.27486), (42.9936183, -81.27833), 0.01)
+#Returns a list of street points in the given area
+def querySidewalk(NorthEast, SouthWest, radius):
 
-# #print(val)
+    url_send = "https://maps.london.ca/arcgisa/rest/services/OpenData/OpenData_Transportation/MapServer/4/query?where=1%3D1&outFields=OBJECTID&geometry=" + str(SouthWest[1] - radius) + "%2C" + str(SouthWest[0] - radius) + "%2C" + str(NorthEast[1] + radius) + "%2C" + str(NorthEast[0] + radius) + "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json"
+    print(url_send)
+    with urllib.request.urlopen(url_send) as url:
+        data = json.loads(url.read().decode())
+        
+    return data["features"]
 
-# waypoint = [(42.99568, -81.27486), (42.99485, -81.27446), (42.994, -81.27737), (42.9939, -81.27774), (42.99387, -81.27833), (42.9936183, -81.2783156)]
+def getSidewalkAvg(waypoints, walks, radius):
 
-# print(len(waypoint))
+    total_list = []
+
+    sum = 0
+    total_distance = 0
+    total_distance_sidewalks = 0
+
+    for i in range(len(waypoints)-1):
+
+        point = waypoints[i]
+        next_point = waypoints[i+1]
+
+        #Calculate bounding box for waypoints: Frist get edge vector at 0,0, but perpendicular (get perpendicular vector {X, Y} becomes {x, -y})
+        edge = np.array([[0,0],[next_point[0] - point[0], point[1] - next_point[1]]])
+
+        #Get unit vector and multiply by desired radius (arbitrary units) and opposite vector
+        edge_perp_radius = np.true_divide(edge, LA.norm(edge))*radius
+        neg_edge_perp_radius = -edge_perp_radius
+
+        #Get four points for polygon using vector for edge on passed points
+        point_1 = [point[0] + edge_perp_radius[1][1], point[1] + edge_perp_radius[1][0]]
+        point_2 = [point[0] + neg_edge_perp_radius[1][1], point[1] + neg_edge_perp_radius[1][0]]
+        point_3 = [next_point[0] + edge_perp_radius[1][1], next_point[1] + edge_perp_radius[1][0]]
+        point_4 = [next_point[0] + neg_edge_perp_radius[1][1], next_point[1] + neg_edge_perp_radius[1][0]]
+
+        lat_lon_area = np.array([point_1, point_2, point_4, point_3])
+
+        #Generate polygon representing area to check for lights
+        polygon = Polygon(lat_lon_area)
 
 
-# #print(val[0]["geometry"]["paths"][0])
-# list_new = getRouteAvgTraffic(waypoint, val, 0.0005)
 
-# print(list_new)
+        on_road = []
+
+        desired_road = 0
+
+        max = 0
+
+        for walk in walks:
+
+            #print("HERE")
+
+            road_path = walk["geometry"]["paths"][0]
+            #print(road_path)
+
+
+
+            for j in range(len(road_path)-1):
+
+                A = Point(road_path[j][1],road_path[j][0])
+                B = Point(road_path[j+1][1],road_path[j+1][0])
+
+                point_path = LineString([A,B])
+
+                
+                #print(point_path)
+                #light_loc = (light["geometry"]["y"], light["geometry"]["x"])
+
+                
+
+                if point_path.intersects(polygon):
+                    #print("Intersect")
+                    if max == 0:
+                        max = polygon.intersection(point_path).length
+                        desired_road = { "id":walk["attributes"]["OBJECTID"], "distance":(geodesic(point, next_point).kilometers)}
+                    elif polygon.intersection(point_path).length > max:
+                        desired_road = { "id":walk["attributes"]["OBJECTID"], "distance":(geodesic(point, next_point).kilometers)}
+                        max = polygon.intersection(point_path).length
+
+        if max != 0:
+            #print("YES")
+            total_distance_sidewalks += geodesic(point, next_point).kilometers
+
+        # if max != 0:
+        #     sum += 2000
+        #     total_distance += geodesic(point, next_point).kilometers
+        total_distance += geodesic(point, next_point).kilometers
+        
+        
+
+        print(desired_road)
+        #total_list.append(desired_road)
+
+    if total_distance == 0:
+        total_distance = 0.00000000001
+
+    return total_distance_sidewalks/total_distance
