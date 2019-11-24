@@ -7,11 +7,13 @@ const styles = require('./googleMapStyles.json')
 const string = `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${API_KEY}`
 const polyline = decodePolyline("{ineGfhaoNFpAvKe@tDQzKc@zGa@bAMx@[v@g@p@s@t@qAPk@hAl@RBPCjAi@fDoAfCnM")
 const style = {
+  
   width: '90vw',
   height: '75vh',
-  borderRadius: '10px',
-  'marginLeft': 'auto',
-  'marginRight': 'auto',
+  borderBottomLeftRadius: '15px',
+  borderBottomRightRadius: '15px',
+  marginLeft: 'auto',
+  marginRight: 'auto'
 }
 function getStartingPoint(props) {
   if (props.line[0]) return { lat: props.line[0].lat, lng: props.line[0].lng };
@@ -64,7 +66,7 @@ export default class MapContainer extends React.Component {
       googleMapURL={ string }
       loadingElement={<div style={{ height: `100%` }} />}
       containerElement={<div style={style} />}
-      mapElement={<div style={{ height: `100%` }} />}
+      mapElement={<div style={style} />}
 /></div>
   }
 }

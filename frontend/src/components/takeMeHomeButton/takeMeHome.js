@@ -18,7 +18,7 @@ class Home extends Component {
             
 
             backgroundColor: 'rgba(52, 52, 52, 0)',
-            fontSize: "9vh",
+            fontSize: "10vh",
             borderRadius: 10,
             borderWidth: 0,
             borderColor: '#000'
@@ -33,8 +33,8 @@ class Home extends Component {
                     justifyContent: "right",
                     alignItems: "right",
                     position: 'absolute',
-                    top: '2.25vh',
-                    right: '7vw',
+                    top: '0.2vh',
+                    right: '4.2vw',
 
                 }}
             >

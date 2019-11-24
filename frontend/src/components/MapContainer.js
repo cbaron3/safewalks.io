@@ -48,6 +48,26 @@ export default class MapContainer extends React.Component {
               console.log(error)
             });
           }}
+
+          placeholder='Where to?'
+
+          inputStyle={{
+            background: '#262F3D',
+            color: 'orange',
+            fontSize: "3vh",
+            fontWeight: "lighter",
+          }}
+
+          suggestionsStyles={{
+            container: {
+              color: 'orange',
+            },
+            suggestion: {
+              background: '#262F3D',
+              fontSize: "2vh",
+              fontWeight: "lighter"
+            },
+          }}
         />
         <MapComponent polyline={ this.state.polyline } location={ this.state.coords }/>
       </div>
