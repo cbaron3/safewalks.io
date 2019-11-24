@@ -12,9 +12,9 @@ from shapely.geometry.polygon import Polygon
 
 
 #Returns a list of street lights in the given area
-def queryAreaLights(NorthEast, SouthWest):
+def queryAreaLights(NorthEast, SouthWest, radius):
 
-    url_send = "https://maps.london.ca/arcgisa/rest/services/OpenData/OpenData_Transportation/MapServer/19/query?where=1%3D1&outFields=PublicCartoSymbolType,OBJECTID&geometry=" + str(SouthWest[1]) + "%2C" + str(SouthWest[0]) + "%2C" + str(NorthEast[1]) + "%2C" + str(NorthEast[0]) + "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json"
+    url_send = "https://maps.london.ca/arcgisa/rest/services/OpenData/OpenData_Transportation/MapServer/19/query?where=1%3D1&outFields=PublicCartoSymbolType,OBJECTID&geometry=" + str(SouthWest[1] - radius) + "%2C" + str(SouthWest[0] - radius) + "%2C" + str(NorthEast[1] + radius) + "%2C" + str(NorthEast[0] + radius) + "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json"
 
     with urllib.request.urlopen(url_send) as url:
         data = json.loads(url.read().decode())
@@ -70,12 +70,27 @@ def getSeenLights(point, next_point, lights, radius):
 
 #print("https://maps.london.ca/arcgisa/rest/services/OpenData/OpenData_Transportation/MapServer/19/query?where=1%3D1&outFields=PublicCartoSymbolType,RoadClass&geometry=" + str(-81.223) + "%2C" + str(42.960) + "%2C" + str(-81.213) + "%2C" + str(42.962) + "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json")
 
-#val = queryAreaLights((42.963, -81.218), (42.961, -81.220))
+#val = queryAreaLights((43.963, -80.218), (41.961, -82.220), 0.005)
 
 #print(val[0]["geometry"]["x"])
 
 #print(len(val))
 
-#seen_light = getSeenLights((42.96182434078348, -81.21924500849471), (42.961085612640474,-81.21750025760407), val, 0.03)
+#seen_light = getSeenLights((42.96182434078348, -81.21924500849471), (42.961085612640474,-81.21750025760407), val, 1)
 
 #print(seen_light)
+
+
+
+
+#Use a similar method to return the traffic volumes for the route taken and the sidewalk availability for the route taken
+
+#Returns a list of street points in the given area
+# def queryAreaLights(NorthEast, SouthWest):
+
+#     url_send = "https://maps.london.ca/arcgisa/rest/services/OpenData/OpenData_Transportation/MapServer/19/query?where=1%3D1&outFields=PublicCartoSymbolType,OBJECTID&geometry=" + str(SouthWest[1]) + "%2C" + str(SouthWest[0]) + "%2C" + str(NorthEast[1]) + "%2C" + str(NorthEast[0]) + "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json"
+
+#     with urllib.request.urlopen(url_send) as url:
+#         data = json.loads(url.read().decode())
+        
+#     return data["features"]
