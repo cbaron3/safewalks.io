@@ -1,3 +1,6 @@
 flask
 googlemaps
 polyline
+geopy
+numpy 
+shapely
