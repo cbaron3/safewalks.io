@@ -1,0 +1,14 @@
+.App {
+    height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        #17006b 0%,
+        #154494 19%,
+        #ad1717 30%,
+        #eec615 100%
+      );
+    background-image: url(twilight.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+}

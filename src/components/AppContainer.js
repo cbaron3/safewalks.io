@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import MapContainer from './MapContainer'
 import LoadingComponent from './LoadingComponent'
+import Heading from './Header/heading'
+import Home from './takeMeHomeButton/takeMeHome'
 
 export default class AppContainer extends Component {
 
@@ -36,6 +38,8 @@ export default class AppContainer extends Component {
     }
     return (
       <div className="AppContainer">
+        <Heading />
+        <Home />
         { visible }
       </div>
     );

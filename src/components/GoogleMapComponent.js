@@ -7,7 +7,7 @@ import { Map, Marker, GoogleApiWrapper, Polyline } from 'google-maps-react';
 class MapContainer extends React.Component {
 
   render() {
-    const polyline = decodePolyline("{ineGfhaoNFpAvKe@tDQzKc@zGa@bAMx@[v@g@p@s@t@qAPk@hAl@RBPCjAi@fDoAfCnM")
+    const polyline = decodePolyline("{ineGfhaoNFpAvKe@tDQzKc@zGa@bAMx@[v@g@p@s@t@qAPk@hAl@RBPCjAi@fDoAnChN")
     return (
       <Map
         google={this.props.google}
