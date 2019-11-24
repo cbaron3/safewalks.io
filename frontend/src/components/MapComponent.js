@@ -5,7 +5,6 @@ import decodePolyline from 'decode-google-map-polyline'
 const styles = require('./googleMapStyles.json')
 
 const string = `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${API_KEY}`
-const polyline = decodePolyline("{ineGfhaoNFpAvKe@tDQzKc@zGa@bAMx@[v@g@p@s@t@qAPk@hAl@RBPCjAi@fDoAfCnM")
 const style = {
   width: '90vw',
   height: '75vh',
@@ -13,9 +12,65 @@ const style = {
   'marginLeft': 'auto',
   'marginRight': 'auto',
 }
+function renderLines(lines, max) {
+  let renders = [];
+  if(lines !== undefined) {
+    lines.forEach(line => {
+      const polyline = decodePolyline(line.polyline);
+      if(line.polyline === max) {
+        renders.push(
+          <Polyline
+            path={polyline}
+            options={{
+              strokeWeight:'3',
+              strokeOpacity:'.9',
+              strokeColor:'orange'
+            }}
+          />
+        )
+        renders.push(
+          <Polyline
+            path={polyline}
+            options={{
+              strokeWeight:'15',
+              strokeOpacity:'.2',
+              strokeColor:'orange'
+            }}
+          />
+        )
+      }
+      else {
+        renders.push(
+          <Polyline
+            path={polyline}
+            options={{
+              strokeWeight:'3',
+              strokeOpacity:'.5',
+              strokeColor:'yellow'
+            }}
+          />
+        )
+        renders.push(
+          <Polyline
+            path={polyline}
+            options={{
+              strokeWeight:'15',
+              strokeOpacity:'.1',
+              strokeColor:'yellow'
+            }}
+          />
+        )
+      }
+    })
+  }
+  return renders;
+}
 function getStartingPoint(props) {
-  if (props.line[0]) return { lat: props.line[0].lat, lng: props.line[0].lng };
-  else return { lat: 0, lng: 1 };
+  if (props.line) {
+    const line = decodePolyline(props.line);
+    return { lat: props.line[0].lat, lng: props.line[0].lng };
+  }
+  else return { lat: 43.0071039, lng: -81.283014 };
 }
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
@@ -30,22 +85,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
       scrollwheel: true, // allow scroll wheel
       styles: styles // change default map styles
     }}>
-    <Polyline
-      path={props.line}
-      options={{
-        strokeWeight:'3',
-        strokeOpacity:'.9',
-        strokeColor:'orange'
-      }}
-    />
-    <Polyline
-      path={props.line}
-      options={{
-        strokeWeight:'15',
-        strokeOpacity:'.2',
-        strokeColor:'orange'
-      }}
-    />
+    { renderLines(props.lines, props.line) }
     <Marker
       icon={{url:'https://img.icons8.com/offices/30/000000/pin.png'}}
       position={getStartingPoint(props)}
@@ -60,7 +100,8 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 export default class MapContainer extends React.Component {
   render() {
     return <div style={ style }><MyMapComponent
-      line={ this.props.polyline }
+      line={ this.props.max_polyline }
+      lines={ this.props.polylines }
       googleMapURL={ string }
       loadingElement={<div style={{ height: `100%` }} />}
       containerElement={<div style={style} />}

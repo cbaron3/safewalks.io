@@ -39,9 +39,10 @@ export default class MapContainer extends React.Component {
                 }
                 index++;
               });
-              line = decodePolyline(response.data[indexOfMaxLine].polyline)
+              line = response.data[indexOfMaxLine].polyline
               this.setState({
-                polyline: line
+                polylines: response.data,
+                max_polyline: line
               });
             })
             .catch(error => {
@@ -49,7 +50,7 @@ export default class MapContainer extends React.Component {
             });
           }}
         />
-        <MapComponent polyline={ this.state.polyline } location={ this.state.coords }/>
+        <MapComponent polylines = { this.state.polylines } max_polyline={ this.state.max_polyline } location={ this.state.coords }/>
       </div>
     );
   }
