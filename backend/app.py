@@ -7,6 +7,7 @@ import operator
 import opendata
 import urllib.request
 import requests
+import types
 
 # Handling cross origin resource handling
 
@@ -37,7 +38,10 @@ DEBUG = True
 def safe_path():
     print(request.args)
     # Grab data from requests
+    
+    
     start = request.args.get('from')
+    #print(start)
     end = request.args.get('to')
     end = gmaps.geocode(end)
     end = (end[0]['geometry']['location']['lat'], end[0]['geometry']['location']['lng'])
@@ -69,10 +73,11 @@ def safe_path():
         # Decode polyline for waypoints
         waypoints = polyline.decode(route['overview_polyline']['points'])
         # Add start and stop points to waypoints
-        start = start.split(',')
+        #print(start)
+        if type(start) is not list:
+            start = start.split(',')
         waypoints.insert(0, (float(start[0]),float(start[1]) ) )
         waypoints.append((float(end[0]),float(end[1]) ) )
-        print(waypoints)
         print('{} waypoints for route {}'.format(len(waypoints), index+1))
         for i in range(len(waypoints) - 1):
             point = waypoints[i]
