@@ -54,7 +54,7 @@ def getSeenLights(point, next_point, lights, radius):
             else:
                 val = int(light["attributes"]["PublicCartoSymbolType"].split('-')[1].split('H')[0])
 
-            seen_lights.append({ "id":light["attributes"]["OBJECTID"], "head":val })
+            seen_lights.append({ "id":light["attributes"]["OBJECTID"], "head":val, "latitude":light["geometry"]["y"], "longitude":light["geometry"]["x"]})
 
     return seen_lights
     
