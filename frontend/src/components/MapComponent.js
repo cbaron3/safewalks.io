@@ -59,8 +59,6 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 
 export default class MapContainer extends React.Component {
   render() {
-    console.log('PROPS')
-    console.log(this.props)
     return <div style={ style }><MyMapComponent
       line={ this.props.polyline }
       googleMapURL={ string }
