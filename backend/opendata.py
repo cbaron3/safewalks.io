@@ -47,7 +47,10 @@ def getSeenLights(point, next_point, lights, radius):
             if not light["attributes"]["PublicCartoSymbolType"]:
                 val = 1
             else:
-                val = int(light["attributes"]["PublicCartoSymbolType"].split('-')[1].split('H')[0])
+                try:
+                    val = int(light["attributes"]["PublicCartoSymbolType"].split('-')[1].split('H')[0])
+                except:
+                    val = 1
 
             seen_lights.append({ "id":light["attributes"]["OBJECTID"], "head":val, "latitude":light["geometry"]["y"], "longitude":light["geometry"]["x"]})
 
