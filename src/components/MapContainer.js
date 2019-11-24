@@ -1,7 +1,7 @@
 import React from 'react';
-import GoogleMapComponent from './GoogleMapComponent'
 import MapComponent from './MapComponent'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import axios from 'axios'
 
 const style = {
   width: '90vw',

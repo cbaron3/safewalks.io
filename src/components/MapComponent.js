@@ -46,6 +46,20 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
         strokeColor:'orange'
       }}
     />
+    <Marker
+      icon={{url:'https://img.icons8.com/offices/30/000000/pin.png'}}
+      position={{
+        lat: polyline[0].lat, // latitude to position the marker
+        lng: polyline[0].lng+0.0006 // longitude to position the marker
+      }}
+    />
+    <Marker
+      icon={{url:'https://img.icons8.com/office/30/000000/walking.png'}}
+      position={{
+        lat: polyline[polyline.length-1].lat-0.0002, // latitude to position the marker
+        lng: polyline[polyline.length-1].lng-0.0002 // longitude to position the marker
+      }}
+    />
   </GoogleMap>
 ))
 
