@@ -4,10 +4,12 @@ import MapComponent from './MapComponent'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 
 const style = {
+
   width: '90vw',
-  borderRadius: '10px',
+  borderRadius: '15px',
   marginLeft: 'auto',
   marginRight: 'auto'
+
 }
 
 export default class MapContainer extends React.Component {
@@ -18,11 +20,31 @@ export default class MapContainer extends React.Component {
 
   render() {
     return (
-      <div className="MapContainer" style={ style }>
-        <GooglePlacesAutocomplete onSelect= {
-            ({ description }) => {
+      <div className="MapContainer" style={style}>
+        <GooglePlacesAutocomplete onSelect={
+          ({ description }) => {
             this.setState({ address: description })
             console.log(description)
+          }}
+
+          placeholder='Where to?'
+
+          inputStyle={{
+            background: '#262F3D',
+            color: 'orange',
+            fontSize: "3vh",
+            fontWeight: "lighter",
+          }}
+
+          suggestionsStyles={{
+            container: {
+              color: 'orange',
+            },
+            suggestion: {
+              background: '#262F3D',
+              fontSize: "2vh",
+              fontWeight: "lighter"
+            },
           }}
         />
         <MapComponent />

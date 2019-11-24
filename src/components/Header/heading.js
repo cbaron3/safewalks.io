@@ -12,14 +12,15 @@ class Heading extends React.Component {
                     display: "flex",
                     justifyContent: "left",
                     alignItems: "center",
-                    top: '2.25vh',
+                    paddingTop: '2vh',
                     right: '7vw',
-                    paddingLeft: '7vw',
+                    paddingLeft: '5vw',
 
-                    fontSize: "3vh"
+                    fontSize: "8vh",
+                    fontWeight: "lighter",
                 }}
             >
-                <h1>safeWalks</h1>
+                safeWalks
 
             </div>
         )

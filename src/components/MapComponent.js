@@ -7,11 +7,13 @@ const styles = require('./googleMapStyles.json')
 const string = `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${API_KEY}`
 const polyline = decodePolyline("{ineGfhaoNFpAvKe@tDQzKc@zGa@bAMx@[v@g@p@s@t@qAPk@hAl@RBPCjAi@fDoAfCnM")
 const style = {
+  
   width: '90vw',
   height: '75vh',
-  borderRadius: '10px',
-  'marginLeft': 'auto',
-  'marginRight': 'auto',
+  borderBottomLeftRadius: '15px',
+  borderBottomRightRadius: '15px',
+  marginLeft: 'auto',
+  marginRight: 'auto'
 
 }
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
@@ -23,12 +25,14 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
         lng: polyline[0].lng
     }}
     defaultOptions={{
+
       disableDefaultUI: true, // disable default map UI
       draggable: true, // make map draggable
       keyboardShortcuts: false, // disable keyboard shortcuts
       scaleControl: true, // allow scale controle
       scrollwheel: true, // allow scroll wheel
       styles: styles // change default map styles
+
     }}>
     <Polyline
       path={polyline}
@@ -51,12 +55,12 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 
 export default class MapContainer extends React.Component {
   render() {
-    return <div style={ style }><MyMapComponent
+    return <div style={style} ><MyMapComponent
       isMarkerShown
       googleMapURL={ string }
       loadingElement={<div style={{ height: `100%` }} />}
       containerElement={<div style={style} />}
-      mapElement={<div style={{ height: `100%` }} />}
+      mapElement={<div style={ style } />}
 /></div>
   }
 }
