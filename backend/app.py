@@ -34,7 +34,7 @@ def safe_path():
     end = request.args.get('to')
     end = gmaps.geocode(end)
     end = (end[0]['geometry']['location']['lat'], end[0]['geometry']['location']['lng'])
-    
+
     if DEBUG:
         print('Start coordinates: {}'.format(start))
         print('End coordinates: {}'.format(end))
@@ -48,15 +48,15 @@ def safe_path():
                               departure_time=now)
 
     print('Possible routes: {}'.format(len(routes)))
-    
+
     seen_lights = [None] * len(routes)
     tracked_lights = [None] * len(routes)
 
     total_lights = [0] * len(routes)
     for index, route in enumerate(routes):
         # For every route, calculate the possible lights
-        ne_bound = (route['bounds']['northeast']['lat'], route['bounds']['northeast']['lng']) 
-        sw_bound = (route['bounds']['southwest']['lat'], route['bounds']['southwest']['lng']) 
+        ne_bound = (route['bounds']['northeast']['lat'], route['bounds']['northeast']['lng'])
+        sw_bound = (route['bounds']['southwest']['lat'], route['bounds']['southwest']['lng'])
         available_lights = opendata.queryAreaLights(ne_bound, sw_bound, 0.00025)
 
         # Decode polyline for waypoints
@@ -69,12 +69,12 @@ def safe_path():
         for i in range(len(waypoints) - 1):
             point = waypoints[i]
             next_point = waypoints[i+1]
-            
+
             in_range = opendata.getSeenLights(point, next_point, available_lights, 0.0005)
             for rlight in in_range:
                 if not seen_lights[index]:
                     seen_lights[index] = set()
-                
+
                 if not tracked_lights[index]:
                     tracked_lights[index] = list()
 
@@ -84,7 +84,7 @@ def safe_path():
                     seen_lights[index].add(rlight['id'])
                     tracked_lights[index].append(rlight)
                     total_lights[index] += (1 * rlight['head'])
-    
+
     max_light_density = 0
     max_index = -1
     max_dist = 0
@@ -92,7 +92,7 @@ def safe_path():
     print('Lights for each route: {}'.format(total_lights))
     for i in range(len(total_lights)):
         dist = routes[i]['legs'][0]['distance']['text']
-        dist = dist.split(' ')            
+        dist = dist.split(' ')
         dist = float( dist[0] )
         total_lights[i] = total_lights[i]/dist
 
@@ -110,7 +110,7 @@ def safe_path():
 
     print('Weighted lights for each route: {}'.format(total_lights))
     print('Best route: {}'.format(max_index+1))
-    
+
     # Return as a response a list of routes with their corresponding tracked lights and their bounding box lights and their safety rating
     safety_result = []
     for i in range(len(routes)):
