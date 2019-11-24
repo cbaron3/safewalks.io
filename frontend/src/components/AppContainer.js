@@ -34,7 +34,7 @@ export default class AppContainer extends Component {
     }
     else {
       if(this.state.allowed_location === undefined) visible = <LoadingComponent />
-      else visible = <MapContainer location={this.state.location}/>
+      else visible = <MapContainer coords={this.state.location.coords}/>
     }
     return (
       <div className="AppContainer">

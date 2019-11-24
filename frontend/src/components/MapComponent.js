@@ -12,16 +12,16 @@ const style = {
   borderRadius: '10px',
   'marginLeft': 'auto',
   'marginRight': 'auto',
-
+}
+function getStartingPoint(props) {
+  if (props.line[0]) return { lat: props.line[0].lat, lng: props.line[0].lng };
+  else return { lat: 0, lng: 1 };
 }
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
     defaultZoom={15}
-    defaultCenter={{ lat: (polyline[0].lat+polyline[polyline.length-1].lat)/2, lng: (polyline[0].lng+polyline[polyline.length-1].lng)/2 }}
-    initialCenter={{
-        lat: polyline[0].lat,
-        lng: polyline[0].lng
-    }}
+    defaultCenter={getStartingPoint(props)}
+    initialCenter={getStartingPoint(props)}
     defaultOptions={{
       disableDefaultUI: true, // disable default map UI
       draggable: true, // make map draggable
@@ -31,7 +31,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
       styles: styles // change default map styles
     }}>
     <Polyline
-      path={polyline}
+      path={props.line}
       options={{
         strokeWeight:'3',
         strokeOpacity:'.9',
@@ -39,7 +39,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
       }}
     />
     <Polyline
-      path={polyline}
+      path={props.line}
       options={{
         strokeWeight:'15',
         strokeOpacity:'.2',
@@ -48,25 +48,21 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     />
     <Marker
       icon={{url:'https://img.icons8.com/offices/30/000000/pin.png'}}
-      position={{
-        lat: polyline[0].lat, // latitude to position the marker
-        lng: polyline[0].lng+0.0006 // longitude to position the marker
-      }}
+      position={getStartingPoint(props)}
     />
     <Marker
       icon={{url:'https://img.icons8.com/office/30/000000/walking.png'}}
-      position={{
-        lat: polyline[polyline.length-1].lat-0.0002, // latitude to position the marker
-        lng: polyline[polyline.length-1].lng-0.0002 // longitude to position the marker
-      }}
+      position={getStartingPoint(props)}
     />
   </GoogleMap>
 ))
 
 export default class MapContainer extends React.Component {
   render() {
+    console.log('PROPS')
+    console.log(this.props)
     return <div style={ style }><MyMapComponent
-      isMarkerShown
+      line={ this.props.polyline }
       googleMapURL={ string }
       loadingElement={<div style={{ height: `100%` }} />}
       containerElement={<div style={style} />}

@@ -3,6 +3,7 @@ import MapComponent from './MapComponent'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import axios from 'axios'
 import encodeurl from 'encodeurl'
+import decodePolyline from 'decode-google-map-polyline'
 import { BACKEND_URL } from '../../src/secrets.js'
 
 const style = {
@@ -15,7 +16,7 @@ const style = {
 export default class MapContainer extends React.Component {
   constructor() {
     super();
-    this.state = { address: '' };
+    this.state = { polyline: '' };
   }
 
   render() {
@@ -24,18 +25,31 @@ export default class MapContainer extends React.Component {
         <GooglePlacesAutocomplete onSelect= {
             ({ description }) => {
             this.setState({ address: description })
-            console.log(this.props);
-            var url = encodeurl(BACKEND_URL + `/api/path?from=${this.props.location.coords.latitude},${this.props.location.coords.longitude}&to=${description}'`);
+            var url = encodeurl(BACKEND_URL + `/api/path?from=${this.props.coords.latitude},${this.props.coords.longitude}&to=${description}`);
             axios.get(url)
             .then(response => {
-              console.log(response)
+              var line;
+              var indexOfMaxLine = -1;
+              var index = 0;
+              var maxSafety = 0;
+              response.data.forEach(x => {
+                if(x.rating > maxSafety) {
+                  maxSafety = x.rating;
+                  indexOfMaxLine = index;
+                }
+                index++;
+              });
+              line = decodePolyline(response.data[indexOfMaxLine].polyline)
+              this.setState({
+                polyline: line
+              });
             })
             .catch(error => {
               console.log(error)
             });
           }}
         />
-        <MapComponent />
+        <MapComponent polyline={ this.state.polyline } location={ this.state.coords }/>
       </div>
     );
   }
