@@ -40,11 +40,11 @@ export default class MapContainer extends React.Component {
                 index++;
               });
               line = response.data[indexOfMaxLine].polyline
-              var lights = response.data[indexOfMaxLine].in_range_lights
               this.setState({
                 polylines: response.data,
                 max_polyline: line,
-                lights: lights
+                lights: response.data[indexOfMaxLine].in_range_lights,
+                all_lights: response.data
               });
             })
             .catch(error => {
@@ -72,7 +72,7 @@ export default class MapContainer extends React.Component {
             },
           }}
         />
-        <MapComponent polylines = { this.state.polylines } max_polyline={ this.state.max_polyline } location={ this.state.coords } lights={ this.state.lights }/>
+        <MapComponent polylines = { this.state.polylines } max_polyline={ this.state.max_polyline } location={ this.state.coords } lights={ this.state.lights } all_lights={ this.state.all_lights }/>
       </div>
     );
   }

@@ -30,7 +30,18 @@ export default class AppContainer extends Component {
   render() {
     var visible;
     if(this.state.allowed_location === false) {
-      visible = <h1>Denied</h1>
+      visible =       <div className="LoadingComponent"
+      style={{
+          color: "white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: '20vh',
+          right: '7vw',
+          paddingLeft: '5vw',
+          fontSize: "6vh",
+          fontWeight: "lighter"
+      }}>Please enable location services</div>
     }
     else {
       if(this.state.allowed_location === undefined) visible = <LoadingComponent />

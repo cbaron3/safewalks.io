@@ -84,6 +84,21 @@ function renderLights(lights) {
   return renders;
 }
 
+function renderAreaLights(lights) {
+  let renders = [];
+  if(lights !== undefined) {
+    lights.forEach(light => {
+        renders.push(
+          <Marker
+            icon={{url:'https://i.imgur.com/5ijEGUQ.png'}}
+            position={{ lat: light.latitude, lng: light.longitude }}
+          />
+        )
+    })
+  }
+  return renders;
+}
+
 
 
 
@@ -109,6 +124,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     }}>
     { renderLines(props.lines, props.line) }
     { renderLights(props.lights) }
+    { renderAreaLights(props.area_lights) }
     <Marker
       icon={{url:'https://img.icons8.com/office/30/000000/walking.png'}}
       position={getStartingPoint(props)}
@@ -118,10 +134,24 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 
 export default class MapContainer extends React.Component {
   render() {
+    let area_lights = []
+    if(this.props.all_lights) {
+      this.props.all_lights.forEach(row => {
+        if(row.polyline !== this.props.max_polyline) {
+          row.area_lights.forEach(light => {
+            area_lights.push({
+              latitude: light.geometry.y,
+              longitude: light.geometry.x
+            })
+          })
+        }
+      })
+    }
     return <div style={ style }><MyMapComponent
       line={ this.props.max_polyline }
       lines={ this.props.polylines }
       lights={ this.props.lights }
+      area_lights={ area_lights }
       googleMapURL={ string }
       loadingElement={<div style={{ height: `100%` }} />}
       containerElement={<div style={style} />}
